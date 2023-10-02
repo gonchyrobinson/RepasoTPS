@@ -1,9 +1,18 @@
 using System.Text.Json;
 namespace RepasoTPS;
 
-public class AccesoADatosJSON : AccesoADatos
+public class AccesoADatosCadeteria
 {
-    public override Cadeteria ObtenerCadeteria(string ruta)
+    private string ruta;
+
+    public AccesoADatosCadeteria(string ruta)
+    {
+        this.ruta = ruta;
+    }
+
+    public string Ruta { get => ruta; set => ruta = value; }
+
+    public Cadeteria Obtener()
     {
         List<Cadeteria> cadeteria = new List<Cadeteria>();
         if (AccesoADatos.ExisteArchivo(ruta))
@@ -20,15 +29,5 @@ public class AccesoADatosJSON : AccesoADatos
         {
             return new Cadeteria();
         }
-    }
-    public override List<Cadete> ObtenerCadetes(string ruta)
-    {
-        List<Cadete> cadetes = new List<Cadete>();
-        if (AccesoADatos.ExisteArchivo(ruta))
-        {
-            string TextoJson = File.ReadAllText(ruta);
-            cadetes = JsonSerializer.Deserialize<List<Cadete>>(TextoJson);
-        }
-        return cadetes;
     }
 }

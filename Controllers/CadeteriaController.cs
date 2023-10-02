@@ -15,11 +15,12 @@ public class CadeteriaController : ControllerBase
         cadeteria = Cadeteria.GetCadeteria();
     }
     [HttpPost("DarDeAltaPedido/numero={num}/observacion={obs}/nombreCliente={nombreC}/DireccionCliente={direcC}/TelefonoC={telefonoC}/DatosRefC={datosC}/idCad={idC}")]
-    public ActionResult<string> DarDeAltaPedido(int num, string obs, string nombreC, string direcC, string telefonoC, string datosC, int idC)
+    public ActionResult<string> DarDeAltaPedido(int num, string obs, string nombreC, string direcC, string telefonoC, string datosC)
     {
-        bool realiza = cadeteria.AgregarPedido(num, obs, nombreC, direcC, telefonoC, datosC, idC);
+        bool realiza = cadeteria.AgregarPedido(num, obs, nombreC, direcC, telefonoC, datosC);
         if (realiza)
         {
+            cadeteria.GuardarPedidos();
             return Ok("Pedido agregado con exito");
         }
         else
@@ -28,12 +29,13 @@ public class CadeteriaController : ControllerBase
         }
     }
     [HttpPost]
-    [Route("AsignarPedido/pedido={ped}/idCadete={idCad}")]
-    public ActionResult<string> AsignarPedACadete(Pedido ped, int idCad)
+    [Route("AsignarPedido/idPedido={idPed}/idCadete={idCad}")]
+    public ActionResult<string> AsignarPedACadete(int idPed, int idCad)
     {
-        bool realiza = cadeteria.AsignarPedidoCadete(ped, idCad);
+        bool realiza = cadeteria.AsignarPedidoCadete(idPed, idCad);
         if (realiza)
         {
+            cadeteria.GuardarPedidos();
             return Ok("Pedido asignado con exito");
         }
         else
@@ -48,6 +50,7 @@ public class CadeteriaController : ControllerBase
         bool realiza = cadeteria.CambiarEstadoPedido(idP, nuevo);
         if (realiza)
         {
+            cadeteria.GuardarPedidos();
             return Ok("Se cambio el estado del pedido exitosamente");
         }
         else
@@ -62,6 +65,7 @@ public class CadeteriaController : ControllerBase
         bool realiza = cadeteria.ReasignarPedido(idP, idC);
         if (realiza)
         {
+            cadeteria.GuardarPedidos();
             return (Ok("Pedido reasignado con exito al nuevo cadete"));
         }
         else
@@ -75,5 +79,33 @@ public class CadeteriaController : ControllerBase
     public ActionResult<string> GetInforme()
     {
         return (Ok(cadeteria.Informe()));
+    }
+    [HttpGet]
+    [Route("GetCadeteria")]
+    public ActionResult<Cadeteria> GetCadeteria(){
+        return Ok(cadeteria);
+    } 
+    [HttpGet]
+    [Route("GetPedidos")]
+    public ActionResult<List<Pedido>> GetPedidos(){
+        return Ok(cadeteria.GetPedidos());
+    }
+    [HttpGet]
+    [Route("GetCadetes")]
+    public ActionResult<List<Cadete>> GetCadetes(){
+        return Ok(cadeteria.GetCadetes());
+    }
+    [HttpPost]
+    [Route("AgregarPedido/ped={ped}")]
+    public ActionResult<string> AgregarPedido(Pedido ped){
+        bool realiza = cadeteria.AgregarPedido(ped);
+        if (realiza)
+        {
+            cadeteria.GuardarPedidos();
+            return Ok("Pedido agregado con exito");
+        }else
+        {
+            return BadRequest("Error al agregar pedido (id repetido)");
+        }
     }
 }

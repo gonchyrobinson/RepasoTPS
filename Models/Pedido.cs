@@ -1,4 +1,5 @@
 
+
 namespace RepasoTPS;
 public enum Estado{
     pendiente = 1,
@@ -11,11 +12,13 @@ public class Pedido{
     private string observacion;
     private Cliente cliente;
     private Estado estado;
+    private Cadete cadete;
 
     public int Numero { get => numero; set => numero = value; }
     public string Observacion { get => observacion; set => observacion = value; }
     internal Cliente Cliente { get => cliente; set => cliente = value; }
     public Estado Estado { get => estado; set => estado = value; }
+    public Cadete Cadete { get => cadete; set => cadete = value; }
 
     public Pedido(){
         this.cliente = new Cliente();
@@ -28,6 +31,7 @@ public class Pedido{
         this.observacion = observacion;
         this.cliente = cliente;
         this.estado = estado;
+        this.Cadete = null;
     }
     public Pedido(int numero, string observacion, Estado estado, string nombreC, string direccionC, string telefonoC, string datosC)
     {
@@ -45,5 +49,17 @@ public class Pedido{
     public void CambiarEstado(Estado nuevoEstado)
     {
         this.estado = nuevoEstado;
+    }
+
+    public bool AsignarCadete(Cadete cadete)
+    {
+        this.cadete = cadete;
+        return true;
+    }
+    public Cadete? GetCadete(){
+        return this.cadete;
+    }
+    public int GetIdCadete(){
+        return this.cadete.Id;
     }
 }

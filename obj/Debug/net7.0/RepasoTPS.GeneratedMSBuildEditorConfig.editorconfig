@@ -1,0 +1,17 @@
+is_global = true
+build_property.TargetFramework = net7.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = RepasoTPS
+build_property.RootNamespace = RepasoTPS
+build_property.ProjectDir = C:\Users\USUARIO\OneDrive\GONCHY\Guardar\TERCERO-Modulo2\TallerDeLenguajes2\RepasoTPS\
+build_property.RazorLangVersion = 7.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\USUARIO\OneDrive\GONCHY\Guardar\TERCERO-Modulo2\TallerDeLenguajes2\RepasoTPS
+build_property._RazorSourceGeneratorDebug = 
